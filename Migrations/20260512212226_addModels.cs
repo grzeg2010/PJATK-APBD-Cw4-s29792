@@ -1,0 +1,90 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace PJATK_APBD_Cw4_s29792.Migrations
+{
+    /// <inheritdoc />
+    public partial class addModels : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Components",
+                columns: table => new
+                {
+                    Code = table.Column<string>(type: "char(10)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ComponentManufacturersId = table.Column<int>(type: "int", nullable: false),
+                    ComponentTypesId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Components", x => x.Code);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PCs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Weight = table.Column<decimal>(type: "decimal(5,3)", precision: 5, scale: 3, nullable: false),
+                    Warranty = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PCs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PCComponents",
+                columns: table => new
+                {
+                    PcId = table.Column<int>(type: "int", nullable: false),
+                    ComponentCode = table.Column<string>(type: "char(10)", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PCComponents", x => new { x.PcId, x.ComponentCode });
+                    table.ForeignKey(
+                        name: "FK_PCComponents_Components_ComponentCode",
+                        column: x => x.ComponentCode,
+                        principalTable: "Components",
+                        principalColumn: "Code",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PCComponents_PCs_PcId",
+                        column: x => x.PcId,
+                        principalTable: "PCs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PCComponents_ComponentCode",
+                table: "PCComponents",
+                column: "ComponentCode");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "PCComponents");
+
+            migrationBuilder.DropTable(
+                name: "Components");
+
+            migrationBuilder.DropTable(
+                name: "PCs");
+        }
+    }
+}

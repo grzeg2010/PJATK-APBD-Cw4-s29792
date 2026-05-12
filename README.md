@@ -9,4 +9,9 @@ NuGet
 - Swashbuckle.AspNetCore.SwaggerUI
 - microsoft.entityframeworkcore.sqlserver
 - Microsoft.EntityFrameworkCore.Design
-- 
+
+```
+dotnet ef migrations add nameOfMigration
+dotnet ef migrations remove
+dotnet ef database update
+```
