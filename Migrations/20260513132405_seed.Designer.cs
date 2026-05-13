@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PJATK_APBD_Cw4_s29792.Infrastructure;
 
@@ -11,9 +12,11 @@ using PJATK_APBD_Cw4_s29792.Infrastructure;
 namespace PJATK_APBD_Cw4_s29792.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20260513132405_seed")]
+    partial class seed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
