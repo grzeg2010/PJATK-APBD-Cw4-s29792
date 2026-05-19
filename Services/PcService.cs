@@ -40,11 +40,28 @@ public class PcService(AppDbContext ctx) : IPcService
         return await ctx.Pcs
             .Where(e => e.Id == id)
             .Select(pc => new PcComponentsResponse(
-                pc.PcComponents.Select(comp => new ComponentResponse(
-                    comp.ComponentCode,
-                    comp.Component.Name,
-                    comp.Component.Description))
-                )).FirstOrDefaultAsync(cancellationToken)
+                pc.Id,
+                pc.Name,
+                pc.Weight,
+                pc.Warranty,
+                pc.CreatedAt,
+                pc.Stock,
+                pc.PcComponents.Select(comp => new PcComponentItemDto(
+                    comp.Amount,
+                    new ComponentDetailDto(
+                        comp.Component.Code,
+                        comp.Component.Name,
+                        comp.Component.Description,
+                        new ManufacturerDto(
+                            comp.Component.ComponentManufacturer.Id,
+                            comp.Component.ComponentManufacturer.Abbreviation,
+                            comp.Component.ComponentManufacturer.FullName,
+                            comp.Component.ComponentManufacturer.FoundationDate),
+                        new ComponentTypeDto(
+                            comp.Component.ComponentType.Id,
+                            comp.Component.ComponentType.Abbreviation,
+                            comp.Component.ComponentType.Name))))
+            )).FirstOrDefaultAsync(cancellationToken)
             ?? throw new NotFoundException($"PC with id {id} not found");
     }
 

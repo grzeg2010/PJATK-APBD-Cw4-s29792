@@ -54,7 +54,7 @@ public class PcsController(IPcService service) : ControllerBase
         try
         {
             await service.UpdateAsync(id, request, cancellationToken);
-            return NoContent();
+            return Ok();
         }
         catch (NotFoundException e)
         {

@@ -15,7 +15,7 @@ public class ComponentManufacturer
     [MaxLength(300)]
     public string FullName { get; set; } = string.Empty;
     
-    public DateOnly Date { get; set; }
+    public DateOnly FoundationDate { get; set; }
     
     public IEnumerable<Component> Components { get; set; } = [];
 }
