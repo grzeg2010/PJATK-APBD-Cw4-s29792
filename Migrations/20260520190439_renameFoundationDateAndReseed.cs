@@ -1,0 +1,222 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace PJATK_APBD_Cw4_s29792.Migrations
+{
+    /// <inheritdoc />
+    public partial class renameFoundationDateAndReseed : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DeleteData(
+                table: "PCComponents",
+                keyColumns: new[] { "ComponentCode", "PcId" },
+                keyValues: new object[] { "APX0423MNS", 1 });
+
+            migrationBuilder.DeleteData(
+                table: "Components",
+                keyColumn: "Code",
+                keyValue: "APX0423MNS");
+
+            migrationBuilder.RenameColumn(
+                name: "Date",
+                table: "ComponentManufacturers",
+                newName: "FoundationDate");
+
+            migrationBuilder.UpdateData(
+                table: "ComponentManufacturers",
+                keyColumn: "Id",
+                keyValue: 1,
+                columns: new[] { "Abbreviation", "FoundationDate", "FullName" },
+                values: new object[] { "AMD", new DateOnly(1969, 5, 1), "Advanced Micro Devices" });
+
+            migrationBuilder.InsertData(
+                table: "ComponentManufacturers",
+                columns: new[] { "Id", "Abbreviation", "FoundationDate", "FullName" },
+                values: new object[,]
+                {
+                    { 2, "NV", new DateOnly(1993, 4, 5), "NVIDIA Corporation" },
+                    { 3, "COR", new DateOnly(1994, 1, 1), "Corsair Gaming Inc." }
+                });
+
+            migrationBuilder.UpdateData(
+                table: "ComponentTypes",
+                keyColumn: "Id",
+                keyValue: 1,
+                columns: new[] { "Abbreviation", "Name" },
+                values: new object[] { "CPU", "Processor" });
+
+            migrationBuilder.InsertData(
+                table: "ComponentTypes",
+                columns: new[] { "Id", "Abbreviation", "Name" },
+                values: new object[,]
+                {
+                    { 2, "GPU", "Graphics Card" },
+                    { 3, "RAM", "Memory" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Components",
+                columns: new[] { "Code", "ComponentManufacturersId", "ComponentTypesId", "Description", "Name" },
+                values: new object[] { "CPU0000001", 1, 1, "8-core gaming processor", "Ryzen 7 7800X3D" });
+
+            migrationBuilder.UpdateData(
+                table: "PCs",
+                keyColumn: "Id",
+                keyValue: 1,
+                columns: new[] { "CreatedAt", "Name", "Stock", "Warranty", "Weight" },
+                values: new object[] { new DateTime(2026, 5, 8, 9, 0, 0, 0, DateTimeKind.Unspecified), "Gaming Beast X", 5, 36, 12.5m });
+
+            migrationBuilder.InsertData(
+                table: "PCs",
+                columns: new[] { "Id", "CreatedAt", "Name", "Stock", "Warranty", "Weight" },
+                values: new object[,]
+                {
+                    { 2, new DateTime(2026, 4, 15, 13, 30, 0, 0, DateTimeKind.Unspecified), "Office Mini Pro", 12, 24, 4.2m },
+                    { 3, new DateTime(2026, 3, 1, 8, 0, 0, 0, DateTimeKind.Unspecified), "Budget Entry", 20, 12, 6.0m }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Components",
+                columns: new[] { "Code", "ComponentManufacturersId", "ComponentTypesId", "Description", "Name" },
+                values: new object[,]
+                {
+                    { "GPU0000001", 2, 2, "High-end gaming graphics card", "RTX 4080 Super" },
+                    { "RAM0000001", 3, 3, "DDR5 RAM module 16GB", "Corsair Vengeance DDR5 16GB" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PCComponents",
+                columns: new[] { "ComponentCode", "PcId", "Amount" },
+                values: new object[,]
+                {
+                    { "CPU0000001", 1, 1 },
+                    { "CPU0000001", 2, 1 },
+                    { "GPU0000001", 1, 1 },
+                    { "RAM0000001", 1, 2 },
+                    { "RAM0000001", 2, 1 },
+                    { "RAM0000001", 3, 1 }
+                });
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DeleteData(
+                table: "PCComponents",
+                keyColumns: new[] { "ComponentCode", "PcId" },
+                keyValues: new object[] { "CPU0000001", 1 });
+
+            migrationBuilder.DeleteData(
+                table: "PCComponents",
+                keyColumns: new[] { "ComponentCode", "PcId" },
+                keyValues: new object[] { "GPU0000001", 1 });
+
+            migrationBuilder.DeleteData(
+                table: "PCComponents",
+                keyColumns: new[] { "ComponentCode", "PcId" },
+                keyValues: new object[] { "RAM0000001", 1 });
+
+            migrationBuilder.DeleteData(
+                table: "PCComponents",
+                keyColumns: new[] { "ComponentCode", "PcId" },
+                keyValues: new object[] { "CPU0000001", 2 });
+
+            migrationBuilder.DeleteData(
+                table: "PCComponents",
+                keyColumns: new[] { "ComponentCode", "PcId" },
+                keyValues: new object[] { "RAM0000001", 2 });
+
+            migrationBuilder.DeleteData(
+                table: "PCComponents",
+                keyColumns: new[] { "ComponentCode", "PcId" },
+                keyValues: new object[] { "RAM0000001", 3 });
+
+            migrationBuilder.DeleteData(
+                table: "Components",
+                keyColumn: "Code",
+                keyValue: "CPU0000001");
+
+            migrationBuilder.DeleteData(
+                table: "Components",
+                keyColumn: "Code",
+                keyValue: "GPU0000001");
+
+            migrationBuilder.DeleteData(
+                table: "Components",
+                keyColumn: "Code",
+                keyValue: "RAM0000001");
+
+            migrationBuilder.DeleteData(
+                table: "PCs",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "PCs",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "ComponentManufacturers",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "ComponentManufacturers",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "ComponentTypes",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "ComponentTypes",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.RenameColumn(
+                name: "FoundationDate",
+                table: "ComponentManufacturers",
+                newName: "Date");
+
+            migrationBuilder.UpdateData(
+                table: "ComponentManufacturers",
+                keyColumn: "Id",
+                keyValue: 1,
+                columns: new[] { "Abbreviation", "Date", "FullName" },
+                values: new object[] { "HP", new DateOnly(1939, 7, 2), "Hewlett-Packard" });
+
+            migrationBuilder.UpdateData(
+                table: "ComponentTypes",
+                keyColumn: "Id",
+                keyValue: 1,
+                columns: new[] { "Abbreviation", "Name" },
+                values: new object[] { "RAM", "Random Access Memory" });
+
+            migrationBuilder.InsertData(
+                table: "Components",
+                columns: new[] { "Code", "ComponentManufacturersId", "ComponentTypesId", "Description", "Name" },
+                values: new object[] { "APX0423MNS", 1, 1, "Fast and big", "Super RAM" });
+
+            migrationBuilder.UpdateData(
+                table: "PCs",
+                keyColumn: "Id",
+                keyValue: 1,
+                columns: new[] { "CreatedAt", "Name", "Stock", "Warranty", "Weight" },
+                values: new object[] { new DateTime(2020, 10, 10, 10, 15, 0, 0, DateTimeKind.Unspecified), "Pc 1", 4, 3, 5.4m });
+
+            migrationBuilder.InsertData(
+                table: "PCComponents",
+                columns: new[] { "ComponentCode", "PcId", "Amount" },
+                values: new object[] { "APX0423MNS", 1, 15 });
+        }
+    }
+}
